@@ -6,16 +6,17 @@ import {CartCardComponent} from './shopping-items/cart-card'
 interface ShoppingCartProps {
     setView: (str: 'SHOPPING_LIST' | 'SHOPPING_CART')=> void;
     cart: ShoppingItem[];
+    removeFromCart: (item:ShoppingItem)=>void;
 }
 
 export const ShoppingCartComponent: React.FC<ShoppingCartProps> = (props) => {
     const renderCards = () =>{
         return props.cart.map(cart => {
-            return(<CartCardComponent item={cart}></CartCardComponent>)
+            return(<CartCardComponent removeFromCart={props.removeFromCart} item={cart}></CartCardComponent>)
         })
     }
     const getTotal=()=>{
-        return props.cart.map((item)=>item.price).reduce((a,b)=>a+b);
+        return props.cart.map((item)=>item.price).reduce((a,b)=>a+b,0);
 
     }
     return (

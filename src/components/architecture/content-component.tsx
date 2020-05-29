@@ -22,14 +22,17 @@ const initialItems: ShoppingItem[]=[{
 const ContentComponent: React.FC = () => {
     const [view, setView] =
         useState<'SHOPPING_CART' | 'SHOPPING_LIST'>('SHOPPING_LIST');
-    const [cart, setStudents] = useState<ShoppingItem[]>([]);
+    const [cart, setCart] = useState<ShoppingItem[]>([]);
     
     const addToCart = (item : ShoppingItem)=>{
-        setStudents([...cart,item])
+        setCart([...cart,item])
+    }
+    const removeFromCart = (item: ShoppingItem)=>{
+        setCart(cart.filter(itm=> itm!= item))
     }
     const getCurrentView = () => {
         switch (view) {
-            case childViews.shoppingCart: return <h1><ShoppingCartComponent cart = {cart} setView={setView}></ShoppingCartComponent></h1>
+            case childViews.shoppingCart: return <h1><ShoppingCartComponent removeFromCart= {removeFromCart} cart = {cart} setView={setView}></ShoppingCartComponent></h1>
             case childViews.shoppingList: return <h1><ShoppingListComponent addToCart={addToCart}items={initialItems} setView={setView}></ShoppingListComponent></h1>
             default: return <React.Fragment />;
         }
